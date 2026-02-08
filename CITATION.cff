@@ -2,15 +2,29 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
 title: "@getkist/action-tsdown"
-version: 1.0.0
-abstract: "tsdown bundler action for kist"
+version: 1.0.1
+date-released: "2026-02-08"
+abstract: "tsdown bundler action for kist - A TypeScript-based build orchestration tool"
 authors:
-  - name: "kist"
+  - name: "kist contributors"
+    affiliation: "kist project"
 repository-code: "https://github.com/getkist/kist-action-tsdown"
+url: "https://kist.js.org"
 license: MIT
 keywords:
   - kist
   - tsdown
-  - bundler
   - rolldown
+  - bundler
   - typescript
+  - javascript
+  - esm
+  - cjs
+  - build-tool
+references:
+  - type: software
+    title: "tsdown"
+    url: "https://github.com/nicepkg/tsdown"
+  - type: software
+    title: "kist"
+    repository-code: "https://github.com/getkist/kist"
