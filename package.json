@@ -1,0 +1,52 @@
+{
+  "name": "@getkist/action-tsdown",
+  "version": "1.0.0",
+  "description": "tsdown bundler action for kist",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "kist",
+    "tsdown",
+    "bundler",
+    "rolldown",
+    "typescript",
+    "plugin"
+  ],
+  "author": "kist",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/getkist/kist-action-tsdown.git"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
+  "dependencies": {
+    "tsdown": "^0.4.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.0",
+    "eslint": "^9.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.3.0",
+    "typescript-eslint": "^8.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

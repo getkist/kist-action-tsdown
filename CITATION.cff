@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "@getkist/action-tsdown"
+version: 1.0.0
+abstract: "tsdown bundler action for kist"
+authors:
+  - name: "kist"
+repository-code: "https://github.com/getkist/kist-action-tsdown"
+license: MIT
+keywords:
+  - kist
+  - tsdown
+  - bundler
+  - rolldown
+  - typescript
