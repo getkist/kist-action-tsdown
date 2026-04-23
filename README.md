@@ -111,7 +111,7 @@ Bundles TypeScript/JavaScript using tsdown (powered by Rolldown).
 ### Options
 
 | Option | Type | Default | Description |
-|--------|------|---------|-------------|
+| -------- | ------ | --------- | ------------- |
 | `entry` | string \| string[] | **required** | Entry point file(s) |
 | `outDir` | string | "./dist" | Output directory |
 | `format` | "esm" \| "cjs" \| "iife" | "esm" | Output format(s) |
