@@ -43,7 +43,7 @@
     "npm": ">=10.0.0"
   },
   "dependencies": {
-    "tsdown": "^0.21.10"
+    "tsdown": "^0.22.0"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
