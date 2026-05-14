@@ -21,7 +21,7 @@
     {
       "@type": "SoftwareApplication",
       "name": "kist",
-      "version": "1.0.22"
+      "version": "0.1.70"
     }
   ],
   "keywords": [
