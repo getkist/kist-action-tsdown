@@ -1,6 +1,6 @@
 {
   "name": "@getkist/action-tsdown",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "tsdown bundler action for kist",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
@@ -43,16 +43,16 @@
     "npm": ">=10.0.0"
   },
   "dependencies": {
-    "tsdown": "^0.4.0"
+    "tsdown": "^0.21.10"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.12",
-    "@types/node": "^25.2.2",
-    "eslint": "^10.0.0",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.1.2",
-    "typescript": "^5.3.0",
-    "typescript-eslint": "^8.0.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.8.0",
+    "eslint": "^10.3.0",
+    "jest": "^30.4.2",
+    "ts-jest": "^29.4.9",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.3",
     "tsup": "^8.5.1"
   },
   "files": [
