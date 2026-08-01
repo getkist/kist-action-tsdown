@@ -130,12 +130,13 @@ Bundles TypeScript/JavaScript using tsdown (powered by Rolldown).
 | `platform` | "node" \| "browser" \| "neutral" | "node" | Target platform |
 | `bundle` | boolean | true | Bundle node_modules |
 | `noExternal` | string[] | - | Packages to include in bundle |
-| `splitting` | boolean | - | Enable code splitting |
 | `configPath` | string | - | Path to tsdown.config.ts |
+| `cwd` | string | `process.cwd()` | Working directory to spawn tsdown in and resolve relative `entry` paths against |
+| `silent` | boolean | false | Suppress tsdown's stdout/stderr output |
 
 ## Requirements
 
-- Node.js >= 20.0.0
+- Node.js >= 22.0.0
 - kist >= 0.1.58
 
 ## License
