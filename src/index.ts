@@ -26,7 +26,7 @@ export { Action } from "./types/Action.js";
  */
 export default {
     name: "@getkist/action-tsdown",
-    version: "1.0.0",
+    version: "1.0.25",
     actions: {
         TsdownAction: new TsdownAction(),
     },
