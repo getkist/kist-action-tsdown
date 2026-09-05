@@ -204,6 +204,11 @@ export interface TsdownActionOptions {
  * kist pipeline log.
  */
 export class TsdownAction extends Action<TsdownActionOptions> {
+    /**
+     * The name this action is registered and referenced by. A step's
+     * `action: TsdownAction` in kist.yaml resolves through this value, and it
+     * also prefixes the action's log output.
+     */
     readonly name = "TsdownAction";
 
     /**

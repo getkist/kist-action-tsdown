@@ -116,3 +116,46 @@ export abstract class Action<TOptions = Record<string, unknown>> {
         }
     }
 }
+
+/**
+ * Action options type - a generic record of key-value pairs. Concrete
+ * actions should extend this with their own strongly-typed option fields
+ * (see {@link TsdownActionOptions} in `TsdownAction.ts` for an example)
+ * rather than relying on the untyped index signature directly.
+ */
+export type ActionOptionsType = Record<string, unknown>;
+
+/**
+ * Plugin interface for kist action packages. A package's default export
+ * (see `src/index.ts`) should satisfy this interface so the kist CLI can
+ * discover its metadata and the actions it registers.
+ */
+export interface ActionPlugin {
+    /** Plugin package name (e.g. the npm package name) */
+    name?: string;
+    /** Plugin version, expected to follow semantic versioning */
+    version: string;
+    /** Short human-readable description of what the plugin provides */
+    description?: string;
+    /** Plugin author name or organization */
+    author?: string;
+    /** URL of the plugin's source repository */
+    repository?: string;
+    /** Keywords for discoverability (e.g. on npm) */
+    keywords?: string[];
+    /**
+     * Static map of action names to action class constructors. Prefer
+     * `registerActions()` for plugins that need to construct this map
+     * dynamically; if both are present, callers should treat
+     * `registerActions()` as authoritative.
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    actions?: Record<string, new () => Action<any>>;
+    /**
+     * Factory that returns the map of action names to action class
+     * constructors registered by this plugin. Called by the kist CLI to
+     * discover which actions the plugin provides.
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    registerActions?: () => Record<string, new () => Action<any>>;
+}
