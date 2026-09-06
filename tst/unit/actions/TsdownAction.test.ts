@@ -130,6 +130,27 @@ describe("TsdownAction", () => {
         });
     });
 
+    describe("resolveTsdownBin", () => {
+        // The hardcoded "tsdown/dist/cli.mjs" is not a file tsdown ships and
+        // not a subpath its exports map permits, so the direct path could
+        // never resolve and every build silently took the slower npx route.
+        const resolve = (): string =>
+            (
+                action.constructor as unknown as {
+                    resolveTsdownBin: () => string;
+                }
+            ).resolveTsdownBin();
+
+        it("should resolve the installed tsdown CLI rather than falling back", () => {
+            expect(resolve()).not.toBe("tsdown");
+        });
+
+        it("should resolve to a file that actually exists", async () => {
+            const { existsSync } = await import("fs");
+            expect(existsSync(resolve())).toBe(true);
+        });
+    });
+
     describe("buildArgs", () => {
         // Access private method via any
         const buildArgs = (opts: Parameters<typeof action.validateOptions>[0]) => {

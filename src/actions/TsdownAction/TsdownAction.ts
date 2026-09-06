@@ -4,7 +4,18 @@
 
 import { Action } from "../../types/Action.js";
 import { spawn } from "child_process";
+import { readFileSync } from "fs";
+import { createRequire } from "module";
 import path from "path";
+
+/**
+ * This package is ESM, where the bare `require` this used to call does not
+ * exist — so resolving tsdown's binary threw a ReferenceError on every run,
+ * was swallowed by the surrounding catch, and the action silently took the
+ * slow `npx` fallback every single time. `createRequire` gives back a
+ * resolver bound to this module.
+ */
+const requireFrom = createRequire(import.meta.url);
 
 // ============================================================================
 // Types
@@ -424,18 +435,15 @@ export class TsdownAction extends Action<TsdownActionOptions> {
     private runTsdown(args: string[], cwd: string, silent?: boolean): Promise<void> {
         return new Promise((resolve, reject) => {
             // Try to find tsdown binary
-            let tsdownBin: string;
-            try {
-                tsdownBin = require.resolve("tsdown/dist/cli.mjs");
-            } catch {
-                // Fallback to npx
-                tsdownBin = "tsdown";
-            }
+            const tsdownBin = TsdownAction.resolveTsdownBin();
 
             this.logDebug(`Running: tsdown ${args.join(" ")}`);
 
             const isNpx = tsdownBin === "tsdown";
-            const command = isNpx ? "npx" : "node";
+            // `process.execPath` rather than "node": the build must run on
+            // the same runtime as the pipeline, which a bare "node" resolved
+            // from PATH is not guaranteed to be.
+            const command = isNpx ? "npx" : process.execPath;
             const spawnArgs = isNpx ? ["tsdown", ...args] : [tsdownBin, ...args];
 
             const child = spawn(command, spawnArgs, {
@@ -457,4 +465,37 @@ export class TsdownAction extends Action<TsdownActionOptions> {
             });
         });
     }
+
+    /**
+     * Locates the installed tsdown CLI, falling back to `npx` when tsdown is
+     * not a resolvable dependency.
+     *
+     * The path is read from tsdown's own `bin` field rather than hardcoded.
+     * The previous "tsdown/dist/cli.mjs" is not a file tsdown ships — the CLI
+     * lives at `dist/run.mjs` — and is not a subpath its `exports` map
+     * permits, so the direct path could never resolve and every build silently
+     * took the slower `npx` route.
+     *
+     * @returns An absolute path to the CLI entry, or the bare name `"tsdown"`
+     * to signal that it must be run through `npx`.
+     */
+    private static resolveTsdownBin(): string {
+        try {
+            // `package.json` is one of the few subpaths tsdown's exports map
+            // allows, which makes it the reliable anchor for finding the rest.
+            const manifestPath = requireFrom.resolve("tsdown/package.json");
+            const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+            const bin =
+                typeof manifest.bin === "string"
+                    ? manifest.bin
+                    : manifest.bin?.tsdown;
+            if (typeof bin === "string" && bin.length > 0) {
+                return path.join(path.dirname(manifestPath), bin);
+            }
+        } catch {
+            // Not installed as a direct dependency; npx will find it.
+        }
+        return "tsdown";
+    }
+
 }
